@@ -13,7 +13,7 @@ import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final String TAG = "MQ";
+    //public static final String TAG = "MQ";
     private int mTempCounter = 0;
 
     @Override
