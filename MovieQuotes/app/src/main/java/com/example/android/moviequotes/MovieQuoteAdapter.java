@@ -1,5 +1,7 @@
 package com.example.android.moviequotes;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -28,17 +30,17 @@ public class MovieQuoteAdapter extends RecyclerView.Adapter<MovieQuoteAdapter.Mo
 
         movieQuotesRef.orderBy(Constants.KEY_CREATED, Query.Direction.DESCENDING).limit(50)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
-                if (e != null) {
-                    Log.w(Constants.TAG, "Listening failed!");
-                    return;
-                }
-                mMovieQuoteSnapshots = documentSnapshots.getDocuments();
-                notifyDataSetChanged();
+                    @Override
+                    public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.w(Constants.TAG, "Listening failed!");
+                            return;
+                        }
+                        mMovieQuoteSnapshots = documentSnapshots.getDocuments();
+                        notifyDataSetChanged();
 
-            }
-        });
+                    }
+                });
     }
 
 
@@ -52,8 +54,8 @@ public class MovieQuoteAdapter extends RecyclerView.Adapter<MovieQuoteAdapter.Mo
     @Override
     public void onBindViewHolder(@NonNull MovieQuoteViewHolder movieQuoteViewHolder, int i) {
         DocumentSnapshot ds = mMovieQuoteSnapshots.get(i);
-        String quote = (String)ds.get(Constants.KEY_QUOTE);
-        String movie = (String)ds.get(Constants.KEY_MOVIE);
+        String quote = (String) ds.get(Constants.KEY_QUOTE);
+        String movie = (String) ds.get(Constants.KEY_MOVIE);
         movieQuoteViewHolder.mMovieTextView.setText(movie);
         movieQuoteViewHolder.mQuoteTextView.setText(quote);
     }
@@ -72,7 +74,15 @@ public class MovieQuoteAdapter extends RecyclerView.Adapter<MovieQuoteAdapter.Mo
             super(itemView);
             mQuoteTextView = itemView.findViewById(R.id.itemview_quote);
             mMovieTextView = itemView.findViewById(R.id.itenview_movie);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Context context = view.getContext();
+                    Intent intent = new Intent(context, MovieQuoteDetailActivity.class);
 
+                    context.startActivity(intent);
+                }
+            });
 
         }
 
