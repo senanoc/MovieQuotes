@@ -19,6 +19,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.w3c.dom.Text;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -61,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
                 Map<String, Object> mq = new HashMap<>();
                 mq.put(Constants.KEY_QUOTE, quoteEditText.getText().toString());
                 mq.put(Constants.KEY_MOVIE, movieEditText.getText().toString());
+                mq.put(Constants.KEY_CREATED, new Date());
                 FirebaseFirestore.getInstance().collection(Constants.COLLECTION_PATH).add(mq);
             }
         });
